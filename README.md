@@ -26,24 +26,61 @@ Base de dados que armazena registros de eventos passados para análise e preven�
 
 --------
 
-Endpoints Principais:
-
-Abrigos
-Eventos
-pessoas
-
---------
-
-
-✅ SafeZoneGO - Teste de CRUD no Banco de Dados Oracle
 Este documento apresenta um passo a passo para criar, popular e testar o banco de dados SafeZoneGO, que gerencia abrigos, eventos naturais e pessoas afetadas.
 
-🛠️ Pré-requisitos
-Banco de Dados Oracle 
+INSTRUÇOES PARA ACESSOS E TESTES:
 
-Ferramenta de execução SQL Developer
+-- POSTMAN
 
-Permissões para criar e excluir tabelas
+Enpoints principais:
+abrigos
+pessoas
+eventos
+
+abrigos
+{
+  "nome": "Abrigo Central",
+  "localizacao": "Rua B, 123",
+  "capacidade": 100 ,
+  "recursos": "alimentos"
+}
+
+pessoas
+{
+  "nome": "João da Silva",
+  "idade": 35,
+  "contato": "joao@email.com",
+  "eventoId": 1,
+  "abrigoId": 1
+}
+
+eventos
+{
+  "id": 1,
+  "descricao": "Enchente severa na região central",
+  "intensidade": 8,
+  "local_evento": "São Paulo, SP",
+  "totalPessoasAfetadas": 250
+}
+
+
+
+
+-- VIA BANCO DE DADOS ORACLE SQL
+
+
+
+rode o projeto pelo icone spring boot
+
+CONECTE COM ESSAS INFORMAÇOES:
+FIAP
+rm558373
+110206
+oracle.fiap.com.br
+1521
+orcl
+
+use esse script NO BANCO....
 
 -- Primeiro, deletar a tabela PessoaAfetada (depende de Abrigo e Evento)
 DROP TABLE PessoaAfetada CASCADE CONSTRAINTS;
@@ -162,23 +199,3 @@ DELETE FROM PessoaAfetada WHERE abrigo_id = 5 OR evento_id = 5;
 -- Agora pode excluir com segurança
 DELETE FROM Abrigo WHERE id = 5;
 DELETE FROM Evento WHERE id = 5;
-
-
-
-
---------
-
-
-
-Tecnologias Utilizadas
-Back-end: Spring Boot (Java)
-
-Banco de Dados: Oracle
-
-Segurança: JWT Authentication
-
-Documentação: Swagger/OpenAPI
-
-Containerização: Docker
-
-DevOps: Azure CLI para provisionamento e deploy em nuvem
