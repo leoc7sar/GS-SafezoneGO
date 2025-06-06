@@ -8,6 +8,9 @@ Funcionalidades principais
 ✅ Monitoramento de Eventos Naturais:
 O sistema integra dados de sensores, satélites e APIs meteorológicas para identificar potenciais riscos naturais.
 
+✅ Sistema de controle:
+Nosso sistema gera o controle de onde estao ocorrendo os eventos, quais sao os abrigos mais proximos e geramos socorro as pessoas afetadas.
+
 ✅ Alertas em Tempo Real:
 Quando um risco é detectado, o SAFEZONEGO envia alertas instantâneos à população através de notificações, SMS ou e-mail.
 
