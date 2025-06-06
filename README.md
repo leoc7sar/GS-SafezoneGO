@@ -23,23 +23,25 @@ Base de dados que armazena registros de eventos passados para análise e preven�
 
 --------
 
+Endpoints Principais:
+
+Abrigos
+Eventos
+pessoas
+
+--------
+
 
 ✅ SafeZoneGO - Teste de CRUD no Banco de Dados Oracle
 Este documento apresenta um passo a passo para criar, popular e testar o banco de dados SafeZoneGO, que gerencia abrigos, eventos naturais e pessoas afetadas.
 
 🛠️ Pré-requisitos
-Banco de Dados Oracle (ou compatível)
+Banco de Dados Oracle 
 
-Ferramenta de execução SQL (SQL Developer, DBeaver, etc.)
+Ferramenta de execução SQL Developer
 
 Permissões para criar e excluir tabelas
 
-📝 1. Deletar tabelas antigas
-Deve ser feito nesta ordem para evitar erros de integridade referencial:
-
-sql
-Copy
-Edit
 -- Primeiro, deletar a tabela PessoaAfetada (depende de Abrigo e Evento)
 DROP TABLE PessoaAfetada CASCADE CONSTRAINTS;
 
@@ -78,7 +80,7 @@ CREATE TABLE PessoaAfetada (
     CONSTRAINT fk_abrigo FOREIGN KEY (abrigo_id) REFERENCES Abrigo(id),
     CONSTRAINT fk_evento FOREIGN KEY (evento_id) REFERENCES Evento(id)
 );
-📥 3. Inserir dados de exemplo
+
 ➡️ Abrigo (5 registros)
 sql
 Copy
@@ -89,18 +91,15 @@ INSERT INTO Abrigo (nome, localizacao, capacidade, recursos) VALUES ('Abrigo Nor
 INSERT INTO Abrigo (nome, localizacao, capacidade, recursos) VALUES ('Abrigo Leste', 'Av. Independência, 321', 120, 'Água, Kits de primeiros socorros');
 INSERT INTO Abrigo (nome, localizacao, capacidade, recursos) VALUES ('Abrigo Oeste', 'Rua das Oliveiras, 654', 60, 'Alimentos, Água, Medicamentos');
 ➡️ Evento (5 registros)
-sql
-Copy
-Edit
+
+
 INSERT INTO Evento (descricao, intensidade, data_evento, local_evento) VALUES ('Enchente no Bairro X', 3, TO_DATE('2025-06-01', 'YYYY-MM-DD'), 'Bairro X');
 INSERT INTO Evento (descricao, intensidade, data_evento, local_evento) VALUES ('Deslizamento no Morro Azul', 4, TO_DATE('2025-06-05', 'YYYY-MM-DD'), 'Morro Azul');
 INSERT INTO Evento (descricao, intensidade, data_evento, local_evento) VALUES ('Incêndio Florestal', 5, TO_DATE('2025-06-10', 'YYYY-MM-DD'), 'Parque Nacional');
 INSERT INTO Evento (descricao, intensidade, data_evento, local_evento) VALUES ('Tempestade Elétrica', 2, TO_DATE('2025-06-15', 'YYYY-MM-DD'), 'Centro Urbano');
 INSERT INTO Evento (descricao, intensidade, data_evento, local_evento) VALUES ('Alagamento na Zona Sul', 3, TO_DATE('2025-06-20', 'YYYY-MM-DD'), 'Zona Sul');
 ➡️ PessoaAfetada (5 registros)
-sql
-Copy
-Edit
+
 INSERT INTO PessoaAfetada (nome, idade, contato, abrigo_id, evento_id) 
 VALUES ('João da Silva', 35, 'joao@email.com', 1, 1);
 
@@ -117,9 +116,7 @@ INSERT INTO PessoaAfetada (nome, idade, contato, abrigo_id, evento_id)
 VALUES ('Lucas Lima', 25, 'lucas@email.com', 5, 5);
 🔍 4. Testar operações CRUD
 ✅ PessoaAfetada
-sql
-Copy
-Edit
+
 -- READ
 SELECT * FROM PessoaAfetada;
 
@@ -129,9 +126,7 @@ UPDATE PessoaAfetada SET contato = 'novoemail@email.com' WHERE id = 1;
 -- DELETE
 DELETE FROM PessoaAfetada WHERE id = 5;
 ✅ Abrigo
-sql
-Copy
-Edit
+
 -- READ
 SELECT * FROM Abrigo;
 
@@ -142,9 +137,7 @@ UPDATE Abrigo SET capacidade = 200 WHERE id = 1;
 DELETE FROM Abrigo WHERE id = 5; 
 -- ⚠️ Atenção: só possível se não houver PessoaAfetada referenciando este Abrigo
 ✅ Evento
-sql
-Copy
-Edit
+
 -- READ
 SELECT * FROM Evento;
 
@@ -159,9 +152,7 @@ Antes de excluir um Abrigo ou Evento usado por uma PessoaAfetada, é necessário
 
 Exemplo:
 
-sql
-Copy
-Edit
+
 -- Excluir pessoas associadas
 DELETE FROM PessoaAfetada WHERE abrigo_id = 5 OR evento_id = 5;
 
@@ -181,10 +172,6 @@ Back-end: Spring Boot (Java)
 
 Banco de Dados: Oracle
 
-Mensageria: RabbitMQ (para envio de alertas assíncronos)
-
-API Externa: Integração com serviços de previsão do tempo (ex: OpenWeatherMap)
-
 Segurança: JWT Authentication
 
 Documentação: Swagger/OpenAPI
@@ -192,7 +179,3 @@ Documentação: Swagger/OpenAPI
 Containerização: Docker
 
 DevOps: Azure CLI para provisionamento e deploy em nuvem
-
------------
-
-Endpoints Principais
